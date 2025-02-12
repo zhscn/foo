@@ -1,0 +1,13 @@
+#include "version.hh"
+
+std::string_view get_project_name() {
+  return "@PROJECT_NAME@";
+}
+
+std::string_view get_project_description() {
+  return "@PROJECT_DESCRIPTION@";
+}
+
+std::string_view get_project_version() {
+  return "@PROJECT_VERSION@";
+}
