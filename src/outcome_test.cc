@@ -51,6 +51,10 @@ Result<void> f4() {
   return make_error("error");
 }
 
+Result<void> f5() {
+  return make_error(1024);
+}
+
 TEST(outcome, test) {
   auto r0 = f0();
   ASSERT_TRUE(r0.has_failure());
@@ -67,6 +71,9 @@ TEST(outcome, test) {
   auto r4 = f4();
   ASSERT_TRUE(r4.has_failure());
   auto& err4 = r4.error();
+  auto r5 = f5();
+  ASSERT_TRUE(r5.has_failure());
+  auto& err5 = r5.error();
 
   ASSERT_NE(err0, err1);
   ASSERT_NE(err1, err0);
@@ -94,9 +101,22 @@ TEST(outcome, test) {
   ASSERT_NE(err4, err1);
   ASSERT_NE(err4, err2);
   ASSERT_NE(err4, err3);
+
+  ASSERT_NE(err0, err5);
+  ASSERT_NE(err1, err5);
+  ASSERT_NE(err2, err5);
+  ASSERT_NE(err3, err5);
+  ASSERT_NE(err4, err5);
+  ASSERT_NE(err5, err0);
+  ASSERT_NE(err5, err1);
+  ASSERT_NE(err5, err2);
+  ASSERT_NE(err5, err3);
+  ASSERT_NE(err5, err4);
+
   // fmt::println("err0: {}", err0);
   // fmt::println("err1: {}", err1);
   // fmt::println("err2: {}", err2);
   // fmt::println("err3: {}", err3);
   // fmt::println("err4: {}", err4);
+  // fmt::println("err5: {}", err5);
 }
