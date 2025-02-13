@@ -249,6 +249,16 @@ TEST(Deserialize, optional) {
   EXPECT_FALSE(value2.has_value());
 }
 
+TEST(Float, float) {
+  Serializer serializer;
+  serialize(serializer, 1.23F);
+  auto s = serializer.take();
+  Deserializer deserializer(s);
+  float value = 0;
+  deserialize(deserializer, value);
+  EXPECT_EQ(value, 1.23F);
+}
+
 TEST(Container, vector) {
   Serializer serializer;
   std::vector<int32_t> input = {1, 2, 3};
