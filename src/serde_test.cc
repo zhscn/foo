@@ -4,6 +4,14 @@
 #include <gtest/gtest.h>
 #include <unordered_set>
 
+TEST(Serialize, bool) {
+  Serializer serializer;
+  serialize(serializer, true);
+  auto s = serializer.take();
+  EXPECT_EQ(s.size(), 1);
+  EXPECT_EQ(s[0], '\x01');
+}
+
 TEST(Serialize, u8) {
   Serializer serializer;
   serialize(serializer, 0xabU);
@@ -118,6 +126,16 @@ TEST(Serialize, str_empty) {
   auto s = serializer.take();
   EXPECT_EQ(s.size(), 1);
   EXPECT_EQ(s[0], '\x00');
+}
+
+TEST(Deserialize, bool) {
+  Serializer serializer;
+  serializer.write_uint(1);
+  auto s = serializer.take();
+  Deserializer deserializer(s);
+  bool value = false;
+  deserialize(deserializer, value);
+  EXPECT_TRUE(value);
 }
 
 TEST(Deserialize, u8) {
