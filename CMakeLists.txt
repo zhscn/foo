@@ -64,7 +64,7 @@ set(YAML_CPP_BUILD_TOOLS Off)
 CPMAddPackage("gh:jbeder/yaml-cpp#39f737443b05e4135e697cb91c2b7b18095acd53")
 CPMAddPackage("gh:zhscn/outcome@0.1.0")
 CPMAddPackage("gh:simdjson/simdjson@3.12.0")
-find_package(Boost REQUIRED)
+find_package(Boost 1.87 REQUIRED)
 find_package(Clang REQUIRED)
 
 ### Full interface target

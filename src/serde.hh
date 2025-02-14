@@ -3,6 +3,7 @@
 #include <boost/endian/conversion.hpp>
 #include <boost/pfr.hpp>
 #include <concepts>
+#include <numeric>
 #include <optional>
 #include <string>
 #include <type_traits>
@@ -24,16 +25,15 @@ struct Serializer {
   }
 
   void write_int(int64_t value) {
-    // zig-zag encoding
     write_uint(detail::zig_zag_encode(value));
   }
   void write_uint(uint64_t value) {
     if (value < 0xFF - 2) {
       pack_int<uint8_t>(value);
-    } else if (value < std::numeric_limits<uint16_t>::max()) {
+    } else if (value <= std::numeric_limits<uint16_t>::max()) {
       pack_int<uint8_t>(0xFF - 2);
       pack_int<uint16_t>(value);
-    } else if (value < std::numeric_limits<uint32_t>::max()) {
+    } else if (value <= std::numeric_limits<uint32_t>::max()) {
       pack_int<uint8_t>(0xFF - 1);
       pack_int<uint32_t>(value);
     } else {
@@ -73,7 +73,6 @@ struct Deserializer {
 
   int64_t read_int() {
     auto value = read_uint();
-    // zig-zag decoding
     return detail::zig_zag_decode(value);
   }
   uint64_t read_uint() {
