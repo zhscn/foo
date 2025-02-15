@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.24)
 
 string(CONCAT FOO_DESCRIPTION
   "Give a million monkeys a million keyboards, and eventually they'll write "
@@ -78,7 +78,8 @@ target_link_libraries(full INTERFACE
   absl::flags_parse
   absl::log_initialize
   absl::log
-  $<LINK_LIBRARY:WHOLE_ARCHIVE,absl::log_flags> 
+  # requires CMake 3.24
+  $<LINK_LIBRARY:WHOLE_ARCHIVE,absl::log_flags>
   absl::memory
   absl::meta
   absl::numeric
