@@ -468,7 +468,7 @@ private:
         auto new_Z = Z->dup_with_child_and_color(std::move(new_Y), d,
                                                  Color::DoubleBlack);
         return balance(std::move(new_Z));
-      }  // X->is_double_black() && Z->is_single_black()
+      }  // Y->is_double_black(Direction::Left) && Y->is_black(Direction::Right)
 
       if (Y->is_black(Direction::Left) &&
           Y->is_double_black(Direction::Right)) {
@@ -487,7 +487,7 @@ private:
         auto new_X = X->dup_with_child_and_color(a, std::move(new_Y),
                                                  Color::DoubleBlack);
         return balance(std::move(new_X));
-      }  // X->is_single_black() && Z->is_double_black()
+      }  // Y->is_black(Direction::Left) && Y->is_double_black(Direction::Right)
 
       if (Y->is_double_black(Direction::Left) && Y->is_red(Direction::Right)) {
         /**
@@ -509,7 +509,7 @@ private:
             c->dup_with_child_and_color(std::move(new_Y), f, Color::Black);
         return Z->dup_with_child_and_color(balance(std::move(new_C)), d,
                                            Color::Black);
-      }  // X->is_double_black() && Z->is_red()
+      }  // Y->is_double_black(Direction::Left) && Y->is_red(Direction::Right)
 
       if (Y->is_red(Direction::Left) && Y->is_double_black(Direction::Right)) {
         /**
@@ -530,7 +530,7 @@ private:
         auto new_B = balance(
             b->dup_with_child_and_color(e, std::move(new_Y), Color::Black));
         return X->dup_with_child_and_color(a, std::move(new_B), Color::Black);
-      }  // X->is_red() && Z->is_double_black()
+      }  // Y->is_red(Direction::Left) && Y->is_double_black(Direction::Right)
 
       return node;
     }
