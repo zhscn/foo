@@ -428,7 +428,8 @@ SYSTEM_ERROR2_NAMESPACE_END
 
 using SYSTEM_ERROR2_NAMESPACE::make_error;
 
-enum class GenericErrc : uint8_t {
+enum class GenericErrc : int {
+  unknown = -1,
   address_family_not_supported = EAFNOSUPPORT,
   address_in_use = EADDRINUSE,
   address_not_available = EADDRNOTAVAIL,
@@ -507,6 +508,241 @@ enum class GenericErrc : uint8_t {
   value_too_large = EOVERFLOW,
   wrong_protocol_type = EPROTOTYPE
 };
+
+inline GenericErrc errno_to_errc(int e) {  // NOLINT
+  if (e == EAFNOSUPPORT) {
+    return GenericErrc::address_family_not_supported;
+  }
+  if (e == EADDRINUSE) {
+    return GenericErrc::address_in_use;
+  }
+  if (e == EADDRNOTAVAIL) {
+    return GenericErrc::address_not_available;
+  }
+  if (e == EISCONN) {
+    return GenericErrc::already_connected;
+  }
+  if (e == E2BIG) {
+    return GenericErrc::argument_list_too_long;
+  }
+  if (e == EDOM) {
+    return GenericErrc::argument_out_of_domain;
+  }
+  if (e == EFAULT) {
+    return GenericErrc::bad_address;
+  }
+  if (e == EBADF) {
+    return GenericErrc::bad_file_descriptor;
+  }
+  if (e == EBADMSG) {
+    return GenericErrc::bad_message;
+  }
+  if (e == EPIPE) {
+    return GenericErrc::broken_pipe;
+  }
+  if (e == ECONNABORTED) {
+    return GenericErrc::connection_aborted;
+  }
+  if (e == EALREADY) {
+    return GenericErrc::connection_already_in_progress;
+  }
+  if (e == ECONNREFUSED) {
+    return GenericErrc::connection_refused;
+  }
+  if (e == ECONNRESET) {
+    return GenericErrc::connection_reset;
+  }
+  if (e == EXDEV) {
+    return GenericErrc::cross_device_link;
+  }
+  if (e == EDESTADDRREQ) {
+    return GenericErrc::destination_address_required;
+  }
+  if (e == EBUSY) {
+    return GenericErrc::device_or_resource_busy;
+  }
+  if (e == ENOTEMPTY) {
+    return GenericErrc::directory_not_empty;
+  }
+  if (e == ENOEXEC) {
+    return GenericErrc::executable_format_error;
+  }
+  if (e == EEXIST) {
+    return GenericErrc::file_exists;
+  }
+  if (e == EFBIG) {
+    return GenericErrc::file_too_large;
+  }
+  if (e == ENAMETOOLONG) {
+    return GenericErrc::filename_too_long;
+  }
+  if (e == ENOSYS) {
+    return GenericErrc::function_not_supported;
+  }
+  if (e == EHOSTUNREACH) {
+    return GenericErrc::host_unreachable;
+  }
+  if (e == EIDRM) {
+    return GenericErrc::identifier_removed;
+  }
+  if (e == EILSEQ) {
+    return GenericErrc::illegal_byte_sequence;
+  }
+  if (e == ENOTTY) {
+    return GenericErrc::inappropriate_io_control_operation;
+  }
+  if (e == EINTR) {
+    return GenericErrc::interrupted;
+  }
+  if (e == EINVAL) {
+    return GenericErrc::invalid_argument;
+  }
+  if (e == ESPIPE) {
+    return GenericErrc::invalid_seek;
+  }
+  if (e == EIO) {
+    return GenericErrc::io_error;
+  }
+  if (e == EISDIR) {
+    return GenericErrc::is_a_directory;
+  }
+  if (e == EMSGSIZE) {
+    return GenericErrc::message_size;
+  }
+  if (e == ENETDOWN) {
+    return GenericErrc::network_down;
+  }
+  if (e == ENETRESET) {
+    return GenericErrc::network_reset;
+  }
+  if (e == ENETUNREACH) {
+    return GenericErrc::network_unreachable;
+  }
+  if (e == ENOBUFS) {
+    return GenericErrc::no_buffer_space;
+  }
+  if (e == ECHILD) {
+    return GenericErrc::no_child_process;
+  }
+  if (e == ENOLINK) {
+    return GenericErrc::no_link;
+  }
+  if (e == ENOLCK) {
+    return GenericErrc::no_lock_available;
+  }
+  if (e == ENOMSG) {
+    return GenericErrc::no_message;
+  }
+  if (e == ENOPROTOOPT) {
+    return GenericErrc::no_protocol_option;
+  }
+  if (e == ENOSPC) {
+    return GenericErrc::no_space_on_device;
+  }
+  if (e == ENOSR) {
+    return GenericErrc::no_stream_resources;
+  }
+  if (e == ENXIO) {
+    return GenericErrc::no_such_device_or_address;
+  }
+  if (e == ENODEV) {
+    return GenericErrc::no_such_device;
+  }
+  if (e == ENOENT) {
+    return GenericErrc::no_such_file_or_directory;
+  }
+  if (e == ESRCH) {
+    return GenericErrc::no_such_process;
+  }
+  if (e == ENOTDIR) {
+    return GenericErrc::not_a_directory;
+  }
+  if (e == ENOTSOCK) {
+    return GenericErrc::not_a_socket;
+  }
+  if (e == ENOSTR) {
+    return GenericErrc::not_a_stream;
+  }
+  if (e == ENOTCONN) {
+    return GenericErrc::not_connected;
+  }
+  if (e == ENOMEM) {
+    return GenericErrc::not_enough_memory;
+  }
+  if (e == ENOTSUP) {
+    return GenericErrc::not_supported;
+  }
+  if (e == ECANCELED) {
+    return GenericErrc::operation_canceled;
+  }
+  if (e == EINPROGRESS) {
+    return GenericErrc::operation_in_progress;
+  }
+  if (e == EPERM) {
+    return GenericErrc::operation_not_permitted;
+  }
+  if (e == EOPNOTSUPP) {
+    return GenericErrc::operation_not_supported;
+  }
+  if (e == EWOULDBLOCK) {
+    return GenericErrc::operation_would_block;
+  }
+  if (e == EOWNERDEAD) {
+    return GenericErrc::owner_dead;
+  }
+  if (e == EACCES) {
+    return GenericErrc::permission_denied;
+  }
+  if (e == EPROTO) {
+    return GenericErrc::protocol_error;
+  }
+  if (e == EPROTONOSUPPORT) {
+    return GenericErrc::protocol_not_supported;
+  }
+  if (e == EROFS) {
+    return GenericErrc::read_only_file_system;
+  }
+  if (e == EDEADLK) {
+    return GenericErrc::resource_deadlock_would_occur;
+  }
+  if (e == EAGAIN) {
+    return GenericErrc::resource_unavailable_try_again;
+  }
+  if (e == ERANGE) {
+    return GenericErrc::result_out_of_range;
+  }
+  if (e == ENOTRECOVERABLE) {
+    return GenericErrc::state_not_recoverable;
+  }
+  if (e == ETIME) {
+    return GenericErrc::stream_timeout;
+  }
+  if (e == ETXTBSY) {
+    return GenericErrc::text_file_busy;
+  }
+  if (e == ETIMEDOUT) {
+    return GenericErrc::timed_out;
+  }
+  if (e == ENFILE) {
+    return GenericErrc::too_many_files_open_in_system;
+  }
+  if (e == EMFILE) {
+    return GenericErrc::too_many_files_open;
+  }
+  if (e == EMLINK) {
+    return GenericErrc::too_many_links;
+  }
+  if (e == ELOOP) {
+    return GenericErrc::too_many_symbolic_link_levels;
+  }
+  if (e == EOVERFLOW) {
+    return GenericErrc::value_too_large;
+  }
+  if (e == EPROTOTYPE) {
+    return GenericErrc::wrong_protocol_type;
+  }
+  return GenericErrc::unknown;
+}
 
 SYSTEM_ERROR2_NAMESPACE_BEGIN
 template <>
