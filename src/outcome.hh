@@ -78,7 +78,7 @@ using string_ref = status_code_domain::string_ref;
 using atomic_refcounted_string_ref =
     status_code_domain::atomic_refcounted_string_ref;
 
-string_ref to_string_ref(const std::string &s) {
+inline string_ref to_string_ref(const std::string &s) {
   auto p = (char *)malloc(s.size());   // NOLINT
   std::memcpy(p, s.data(), s.size());  // NOLINT
   return atomic_refcounted_string_ref{p, s.size()};
