@@ -64,6 +64,11 @@ set(YAML_CPP_BUILD_TOOLS Off)
 CPMAddPackage("gh:jbeder/yaml-cpp#39f737443b05e4135e697cb91c2b7b18095acd53")
 CPMAddPackage("gh:zhscn/outcome@0.1.0")
 CPMAddPackage("gh:simdjson/simdjson@3.12.2")
+# Python 3.5 2.9.2
+#        3.6 2.12.1
+#        3.7 ~
+set(PYBIND11_FINDPYTHON ON)
+CPMAddPackage("gh:pybind/pybind11@2.13.6")
 find_package(Boost 1.87 REQUIRED)
 find_package(Clang REQUIRED)
 find_package(PkgConfig)
