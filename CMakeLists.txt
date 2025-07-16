@@ -56,9 +56,9 @@ CPMAddPackage(
 CPMAddPackage(
   URI     "gh:abseil/abseil-cpp#20250512.1"
   OPTIONS "ABSL_ENABLE_INSTALL ON")
-CPMAddPackage("gh:google/re2#2025-06-26b")
+CPMAddPackage("gh:google/re2#2024-07-02")
 CPMAddPackage("gh:google/googletest@1.17.0")
-CPMAddPackage("gh:stephenberry/glaze@5.5.2")
+CPMAddPackage("gh:stephenberry/glaze@5.5.3")
 set(BUILD_SHARED_LIBS ON)
 CPMAddPackage("gh:uxlfoundation/oneTBB@2022.2.0")
 set(BUILD_SHARED_LIBS OFF)
