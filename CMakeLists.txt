@@ -56,9 +56,9 @@ CPMAddPackage(
 CPMAddPackage(
   URI     "gh:abseil/abseil-cpp#20250512.1"
   OPTIONS "ABSL_ENABLE_INSTALL ON")
-CPMAddPackage("gh:google/re2#2024-07-02")
+CPMAddPackage("gh:google/re2#2025-08-05")
 CPMAddPackage("gh:google/googletest@1.17.0")
-CPMAddPackage("gh:stephenberry/glaze@5.5.3")
+CPMAddPackage("gh:stephenberry/glaze@5.5.5")
 set(BUILD_SHARED_LIBS ON)
 CPMAddPackage("gh:uxlfoundation/oneTBB@2022.2.0")
 set(BUILD_SHARED_LIBS OFF)
@@ -66,7 +66,7 @@ set(YAML_CPP_BUILD_TESTS Off)
 set(YAML_CPP_BUILD_CONTRIB Off)
 set(YAML_CPP_BUILD_TOOLS Off)
 CPMAddPackage("gh:jbeder/yaml-cpp#39f737443b05e4135e697cb91c2b7b18095acd53")
-CPMAddPackage("gh:zhscn/outcome@0.1.0")
+CPMAddPackage("gh:zhscn/outcome@0.1.1")
 CPMAddPackage("gh:simdjson/simdjson@3.13.0")
 # Python 3.5 2.9.2
 #        3.6 2.12.1

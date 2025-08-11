@@ -167,20 +167,28 @@ private:
 };
 
 struct RawTerminal {
-  std::optional<struct termios> orig;
+  RawTerminal() = default;
+  RawTerminal(const RawTerminal &) = default;
+  RawTerminal(RawTerminal &&) = delete;
+  RawTerminal &operator=(const RawTerminal &) = default;
+  RawTerminal &operator=(RawTerminal &&) = delete;
+
+  struct termios orig;
+  bool raw;
 
   void enable_raw() {
-    if (orig) {
+    if (raw) {
       return;
     }
 
-    struct termios t;
+    raw = true;
+    struct termios t{};
     auto ret = tcgetattr(STDIN_FILENO, &t);
     if (ret == -1) {
       throw std::runtime_error(strerror(errno));
     }
 
-    orig.emplace(t);
+    orig = t;
     cfmakeraw(&t);
     ret = tcsetattr(STDIN_FILENO, TCSANOW, &t);
     if (ret == -1) {
@@ -189,9 +197,9 @@ struct RawTerminal {
   }
 
   void disable_raw() {
-    if (orig) {
-      tcsetattr(STDIN_FILENO, TCSANOW, &*orig);
-      orig.reset();
+    if (raw) {
+      tcsetattr(STDIN_FILENO, TCSANOW, &orig);
+      raw = false;
     }
   }
 

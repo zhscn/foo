@@ -103,7 +103,8 @@ int tty_readable(tty_device_t ptr, int ms) {
   fd_set read_fds;
   FD_ZERO(&read_fds);
   FD_SET(td->fd, &read_fds);
-  struct timeval timeout = {.tv_sec = ms / 1000, .tv_usec = (ms % 1000) * 1000};
+  struct timeval timeout = {.tv_sec = ms / 1000,
+                            .tv_usec = (ms % 1000) * 1000L};
   return select(td->fd + 1, &read_fds, NULL, NULL, &timeout) > 0;
 }
 

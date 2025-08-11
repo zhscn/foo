@@ -428,7 +428,7 @@ SYSTEM_ERROR2_NAMESPACE_END
 
 using SYSTEM_ERROR2_NAMESPACE::make_error;
 
-enum class GenericErrc : int {
+enum class GenericErrc : int {  // NOLINT
   unknown = -1,
   address_family_not_supported = EAFNOSUPPORT,
   address_in_use = EADDRINUSE,
