@@ -7,15 +7,15 @@
 #include <termios.h>
 #include <unistd.h>
 
-typedef struct tty_device_s {
+struct tty_device_t {
   struct termios term;
   int fd;
   int raw;
-} tty_device_s;
+};
 
-tty_device_t tty_open() {
+tty_device_t *tty_open() {
   int fd = -1;
-  tty_device_s *td = NULL;
+  tty_device_t *td = NULL;
   int ret = 0;
 
   fd = open("/dev/tty", O_RDWR);
@@ -23,7 +23,7 @@ tty_device_t tty_open() {
     goto clean;
   }
 
-  td = (tty_device_s *)malloc(sizeof(tty_device_s));
+  td = (tty_device_t *)malloc(sizeof(tty_device_t));
   if (td == NULL) {
     goto clean;
   }
@@ -48,9 +48,7 @@ clean:
   return NULL;
 }
 
-void tty_close(tty_device_t ptr) {
-  tty_device_s *td = (tty_device_s *)ptr;
-
+void tty_close(tty_device_t *td) {
   if (td->fd != -1) {
     tty_disable_raw(td);
     close(td->fd);
@@ -59,9 +57,7 @@ void tty_close(tty_device_t ptr) {
   free(td);
 }
 
-int tty_enable_raw(tty_device_t ptr) {
-  tty_device_s *td = (tty_device_s *)ptr;
-
+int tty_enable_raw(tty_device_t *td) {
   struct termios t = td->term;
   t.c_iflag &=
       ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
@@ -82,9 +78,7 @@ int tty_enable_raw(tty_device_t ptr) {
   return 0;
 }
 
-int tty_disable_raw(tty_device_t ptr) {
-  tty_device_s *td = (tty_device_s *)ptr;
-
+int tty_disable_raw(tty_device_t *td) {
   if (td->raw == 0) {
     return 0;
   }
@@ -98,8 +92,7 @@ int tty_disable_raw(tty_device_t ptr) {
   return 0;
 }
 
-int tty_readable(tty_device_t ptr, int ms) {
-  tty_device_s *td = (tty_device_s *)ptr;
+int tty_readable(tty_device_t *td, int ms) {
   fd_set read_fds;
   FD_ZERO(&read_fds);
   FD_SET(td->fd, &read_fds);
@@ -108,23 +101,19 @@ int tty_readable(tty_device_t ptr, int ms) {
   return select(td->fd + 1, &read_fds, NULL, NULL, &timeout) > 0;
 }
 
-int tty_read(tty_device_t ptr, char *buf, int len) {
-  tty_device_s *td = (tty_device_s *)ptr;
-  return read(td->fd, buf, len);
+int tty_read(tty_device_t *td, char *buf, int len) {
+  return (int)read(td->fd, buf, len);
 }
 
-int tty_write(tty_device_t ptr, char *buf, int len) {
-  tty_device_s *td = (tty_device_s *)ptr;
-  return write(td->fd, buf, len);
+int tty_write(tty_device_t *td, char *buf, int len) {
+  return (int)write(td->fd, buf, len);
 }
 
-int tty_is_backspace(tty_device_t ptr, char c) {
-  tty_device_s *td = (tty_device_s *)ptr;
+int tty_is_backspace(tty_device_t *td, unsigned char c) {
   return c == td->term.c_cc[VERASE];
 }
 
-int tty_get_window_size(tty_device_t ptr, int *row, int *col) {
-  tty_device_s *td = (tty_device_s *)ptr;
+int tty_get_window_size(tty_device_t *td, int *row, int *col) {
   struct winsize ws;
   if (ioctl(td->fd, TIOCGWINSZ, &ws) != 0) {
     return -1;
