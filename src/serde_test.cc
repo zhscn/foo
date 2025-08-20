@@ -3,6 +3,7 @@
 #include <fmt/core.h>
 #include <gtest/gtest.h>
 #include <unordered_set>
+#include <utility>
 
 TEST(Serialize, bool) {
   Serializer serializer;
@@ -327,4 +328,58 @@ TEST(Container, unordered_set) {
   for (const auto &v : input) {
     EXPECT_TRUE(value.count(v));
   }
+}
+
+struct Aggregate {
+  int32_t a;
+  int32_t b;
+};
+
+TEST(Aggregate, serde) {
+  Serializer serializer;
+  Aggregate input = {.a = 1, .b = 2};
+  serialize(serializer, input);
+  auto s = serializer.take();
+  Deserializer deserializer(s);
+  Aggregate value{};
+  deserialize(deserializer, value);
+  EXPECT_EQ(value.a, 1);
+  EXPECT_EQ(value.b, 2);
+}
+
+class NonAggregate {
+public:
+  NonAggregate() = default;
+  NonAggregate(int32_t a, double b, std::string c)  // NOLINT
+      : a(a), b(b), c(std::move(c)) {}
+
+  friend void serialize(Serializer &serializer, const NonAggregate &value) {
+    serialize(serializer, value.a);
+    serialize(serializer, value.b);
+    serialize(serializer, value.c);
+  }
+
+  friend void deserialize(Deserializer &deserializer, NonAggregate &value) {
+    deserialize(deserializer, value.a);
+    deserialize(deserializer, value.b);
+    deserialize(deserializer, value.c);
+  }
+
+  bool operator==(const NonAggregate &other) const = default;
+
+private:
+  int32_t a{};
+  double b{};
+  std::string c;
+};
+
+TEST(NonAggregate, serde) {
+  Serializer serializer;
+  NonAggregate input(1, 2.3, "hello");
+  serialize(serializer, input);
+  auto s = serializer.take();
+  Deserializer deserializer(s);
+  NonAggregate value;
+  deserialize(deserializer, value);
+  EXPECT_EQ(value, input);
 }

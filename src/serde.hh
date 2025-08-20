@@ -196,6 +196,20 @@ void deserialize(Deserializer &deserializer, std::optional<T> &value) {
   }
 }
 
+template <typename T>
+  requires std::is_aggregate_v<T>
+void serialize(Serializer &serializer, const T &value) {
+  boost::pfr::for_each_field(
+      value, [&](const auto &field) { serialize(serializer, field); });
+}
+
+template <typename T>
+  requires std::is_aggregate_v<T>
+void deserialize(Deserializer &deserializer, T &value) {
+  boost::pfr::for_each_field(
+      value, [&](auto &field) { deserialize(deserializer, field); });
+}
+
 template <typename C>
 concept AssociativeContainer = requires(const C &c) {
   typename C::key_type;
