@@ -175,8 +175,8 @@ constexpr const AnyhowDomainImpl<T> &AnyhowDomainImpl<T>::get() {
 
 template <typename T>
   requires AnyhowValue<T>
-inline system_code make_status_code(T &&value) {
-  return make_nested_status_code(std::forward<T>(value));
+inline system_code make_status_code(status_code<AnyhowDomainImpl<T>> value) {
+  return make_nested_status_code(std::move(value));
 }
 
 template <typename Enum, typename = void>
