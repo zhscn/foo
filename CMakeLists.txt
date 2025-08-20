@@ -70,9 +70,10 @@ CPMAddPackage("gh:zhscn/outcome@0.1.0")
 CPMAddPackage("gh:simdjson/simdjson@3.13.0")
 # Python 3.5 2.9.2
 #        3.6 2.12.1
-#        3.7 ~
+#        3.7 2.13.6
+#        3.8 ~
 set(PYBIND11_FINDPYTHON ON)
-CPMAddPackage("gh:pybind/pybind11@2.13.6")
+CPMAddPackage("gh:pybind/pybind11@3.0.0")
 find_package(Boost 1.88 REQUIRED)
 find_package(Clang REQUIRED)
 find_package(PkgConfig)
