@@ -24,3 +24,6 @@ target_link_libraries(t2d PRIVATE Boost::boost)
 if (APPLE)
   add_executable(find-tty find-tty.c)
 endif()
+
+add_executable(keyecho keyecho.cc)
+target_link_libraries(keyecho PRIVATE Boost::boost fmt::fmt)
