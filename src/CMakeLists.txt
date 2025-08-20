@@ -12,3 +12,6 @@ foo_add_test(serde_test)
 
 add_executable(mcs termio-select.cc)
 target_link_libraries(mcs PRIVATE full)
+
+pybind11_add_module(foopy py.cc)
+install(TARGETS foopy DESTINATION .)
