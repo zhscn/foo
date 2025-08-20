@@ -20,3 +20,5 @@ add_library(tty_device SHARED tty_device.c)
 
 add_executable(t2d t2d.cc)
 target_link_libraries(t2d PRIVATE full)
+
+add_executable(find-tty find-tty.c)
