@@ -50,10 +50,12 @@ include(${CPM_DOWNLOAD_LOCATION})
 
 ### Libraries
 CPMAddPackage("gh:fmtlib/fmt#11.2.0")
-set(SPDLOG_FMT_EXTERNAL ON)
-CPMAddPackage("gh:gabime/spdlog@1.15.3")
-set(ABSL_ENABLE_INSTALL ON)
-CPMAddPackage("gh:abseil/abseil-cpp#20250512.1")
+CPMAddPackage(
+  URI     "gh:gabime/spdlog@1.15.3"
+  OPTIONS "SPDLOG_FMT_EXTERNAL ON")
+CPMAddPackage(
+  URI     "gh:abseil/abseil-cpp#20250512.1"
+  OPTIONS "ABSL_ENABLE_INSTALL ON")
 CPMAddPackage("gh:google/re2#2025-06-26b")
 CPMAddPackage("gh:google/googletest@1.17.0")
 CPMAddPackage("gh:stephenberry/glaze@5.5.2")
