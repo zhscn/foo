@@ -27,8 +27,8 @@ if(ENABLE_LTO)
 endif()
 
 ### CPM
-set(CPM_DOWNLOAD_VERSION 0.40.8)
-set(CPM_HASH_SUM "78ba32abdf798bc616bab7c73aac32a17bbd7b06ad9e26a6add69de8f3ae4791")
+set(CPM_DOWNLOAD_VERSION 0.42.0)
+set(CPM_HASH_SUM "2020b4fc42dba44817983e06342e682ecfc3d2f484a581f11cc5731fbe4dce8a")
 set(CPM_DOWNLOAD_URL "https://github.com/cpm-cmake/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake")
 
 if(CPM_SOURCE_CACHE)
@@ -49,27 +49,27 @@ endif()
 include(${CPM_DOWNLOAD_LOCATION})
 
 ### Libraries
-CPMAddPackage("gh:fmtlib/fmt#11.1.4")
+CPMAddPackage("gh:fmtlib/fmt#11.2.0")
 set(SPDLOG_FMT_EXTERNAL ON)
-CPMAddPackage("gh:gabime/spdlog@1.15.1")
+CPMAddPackage("gh:gabime/spdlog@1.15.3")
 set(ABSL_ENABLE_INSTALL ON)
-CPMAddPackage("gh:abseil/abseil-cpp#20250127.1")
+CPMAddPackage("gh:abseil/abseil-cpp#20250512.0")
 CPMAddPackage("gh:google/re2#2024-07-02")
-CPMAddPackage("gh:google/googletest@1.16.0")
-CPMAddPackage("gh:stephenberry/glaze@5.0.1")
-CPMAddPackage("gh:uxlfoundation/oneTBB@2022.0.0")
+CPMAddPackage("gh:google/googletest@1.17.0")
+CPMAddPackage("gh:stephenberry/glaze@5.3.0")
+CPMAddPackage("gh:uxlfoundation/oneTBB@2022.1.0")
 set(YAML_CPP_BUILD_TESTS Off)
 set(YAML_CPP_BUILD_CONTRIB Off)
 set(YAML_CPP_BUILD_TOOLS Off)
 CPMAddPackage("gh:jbeder/yaml-cpp#39f737443b05e4135e697cb91c2b7b18095acd53")
 CPMAddPackage("gh:zhscn/outcome@0.1.0")
-CPMAddPackage("gh:simdjson/simdjson@3.12.2")
+CPMAddPackage("gh:simdjson/simdjson@3.12.3")
 # Python 3.5 2.9.2
 #        3.6 2.12.1
 #        3.7 ~
 set(PYBIND11_FINDPYTHON ON)
 CPMAddPackage("gh:pybind/pybind11@2.13.6")
-find_package(Boost 1.87 REQUIRED)
+find_package(Boost 1.88 REQUIRED)
 find_package(Clang REQUIRED)
 find_package(PkgConfig)
 
