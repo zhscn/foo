@@ -32,7 +32,7 @@ void setup_logger(std::string_view sv) {
   // redirect stderr to a file when it is attached to a terminal
 
   auto name = fmt::format("{}/{}.log", sv, getpid());
-  auto fd = open(name.c_str(), O_WRONLY | O_CREAT | O_APPEND, 0644);
+  auto fd = open(name.c_str(), O_WRONLY | O_CREAT | O_APPEND, 0644); // NOLINT
   if (fd == -1) {
     throw std::runtime_error(
         fmt::format("can not create log file: {}", strerror(errno)));
@@ -53,7 +53,7 @@ void handle_args(int argc, char** argv) {
     return !absl::StrContains(sv, "absl");
   };
   cfg.normalize_filename = [](absl::string_view sv) -> std::string {
-    auto len = 0;
+    std::size_t len = 0;
     if (auto n = sv.rfind("project_root/"); n != absl::string_view::npos) {
       len = n;
     }

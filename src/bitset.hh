@@ -1,7 +1,6 @@
 #pragma once
 
-#include <stdint.h>
-#include <exception>
+#include <cstdint>
 #include <stdexcept>
 #include <vector>
 
@@ -27,11 +26,11 @@ public:
     if (offset >= size_) {
       throw std::out_of_range("BitMap::at");
     }
-    return !!(data_[offset / 64] & (1ULL << (offset % 64)));
+    return (data_[offset / 64] & (1ULL << (offset % 64))) != 0;
   }
 
   bool operator[](size_t offset) const {
-    return !!(data_[offset / 64] & (1ULL << (offset % 64)));
+    return (data_[offset / 64] & (1ULL << (offset % 64))) != 0;
   }
 
   size_t size() const {
