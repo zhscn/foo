@@ -117,6 +117,16 @@ void serialize(Serializer &serializer, T value) {
   serializer.write_int(int64_t(value));
 }
 
+template <std::floating_point T>
+void serialize(Serializer &serializer, T value) {
+  union {
+    T f;
+    uint64_t u;
+  } v;
+  v.f = value;
+  serializer.write_uint(v.u);
+}
+
 void serialize(Serializer &serializer, const char *str) {
   serializer.write_str(str);
 }
@@ -147,6 +157,16 @@ void deserialize(Deserializer &deserializer, T &value) {
 template <std::signed_integral T>
 void deserialize(Deserializer &deserializer, T &value) {
   value = deserializer.read_int();
+}
+
+template <std::floating_point T>
+void deserialize(Deserializer &deserializer, T &value) {
+  union {
+    T f;
+    uint64_t u;
+  } v;
+  v.u = deserializer.read_uint();
+  value = v.f;
 }
 
 void deserialize(Deserializer &deserializer, std::string &value) {
