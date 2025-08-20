@@ -54,11 +54,11 @@ CPMAddPackage(
   URI     "gh:gabime/spdlog@1.15.3"
   OPTIONS "SPDLOG_FMT_EXTERNAL ON")
 CPMAddPackage(
-  URI     "gh:abseil/abseil-cpp#20250512.1"
+  URI     "gh:abseil/abseil-cpp#20250814.0"
   OPTIONS "ABSL_ENABLE_INSTALL ON")
-CPMAddPackage("gh:google/re2#2025-08-05")
+CPMAddPackage("gh:google/re2#2025-08-12")
 CPMAddPackage("gh:google/googletest@1.17.0")
-CPMAddPackage("gh:stephenberry/glaze@5.5.5")
+CPMAddPackage("gh:stephenberry/glaze@5.6.0")
 set(BUILD_SHARED_LIBS ON)
 CPMAddPackage("gh:uxlfoundation/oneTBB@2022.2.0")
 set(BUILD_SHARED_LIBS OFF)
@@ -74,7 +74,7 @@ CPMAddPackage("gh:simdjson/simdjson@3.13.0")
 #        3.8 ~
 set(PYBIND11_FINDPYTHON ON)
 CPMAddPackage("gh:pybind/pybind11@3.0.0")
-find_package(Boost 1.88 REQUIRED)
+find_package(Boost 1.89 REQUIRED)
 find_package(Clang REQUIRED)
 find_package(PkgConfig)
 
