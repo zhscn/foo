@@ -66,6 +66,9 @@ CPMAddPackage("gh:zhscn/outcome@0.1.0")
 CPMAddPackage("gh:simdjson/simdjson@3.12.0")
 find_package(Boost 1.87 REQUIRED)
 find_package(Clang REQUIRED)
+find_package(PkgConfig)
+
+pkg_check_modules(CURSES REQUIRED IMPORTED_TARGET ncurses)
 
 ### Full interface target
 add_library(full)
@@ -94,6 +97,7 @@ target_link_libraries(full INTERFACE
   outcome::outcome
   outcome::std_error_code
   outcome::exception
+  PkgConfig::CURSES
   re2::re2
   simdjson::simdjson
   spdlog::spdlog
