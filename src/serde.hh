@@ -3,7 +3,7 @@
 #include <boost/endian/conversion.hpp>
 #include <boost/pfr.hpp>
 #include <concepts>
-#include <numeric>
+#include <numeric>  // IWYU pragma: keep
 #include <optional>
 #include <string>
 #include <type_traits>
@@ -57,13 +57,13 @@ private:
     T v = boost::endian::native_to_little(value);
     auto size = buffer.size();
     buffer.resize(size + sizeof(value));
-    std::memcpy(&buffer[size], &v, sizeof(value));
+    std::memcpy(buffer.data() + size, &v, sizeof(value));  // NOLINT
   }
   void pack_str(const char *p, std::size_t length) {
     write_uint(length);
     auto size = buffer.size();
     buffer.resize(size + length);
-    std::memcpy(&buffer[size], p, length);
+    std::memcpy(buffer.data() + size, p, length);  // NOLINT
   }
 };
 
@@ -100,7 +100,7 @@ private:
   template <typename T>
   T pick_int() {
     T value;
-    std::memcpy(&value, &buffer[pos], sizeof(value));
+    std::memcpy(&value, buffer.data() + pos, sizeof(value));  // NOLINT
     pos += sizeof(value);
     return boost::endian::little_to_native(value);
   }
